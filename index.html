@@ -81,7 +81,7 @@
 		}
 
 		function randNum(max){
-			return Math.floor(Math.random() * max) - 1;
+			return Math.floor(Math.random() * max);
 		}
 
 		function setFunFact(){
@@ -116,6 +116,8 @@
 			<button class="button" onclick="generateTreeText()">Generate SML Text</button>
 			<p>Copy and paste the text below:</p>
 			<tt><p id="treeText" style="border:1px solid blue; padding:5px">~SML Text will appear here~</p></tt>
+			<p style="color:gray">
+				Note: only nodes with non-empty parents (aka a valid path to the root) will appear in the output</p>
 		</div>
 	</div>
 </body>
