@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tree-to-SML Text Converter</title>
+	<style>
+		.button {
+			background-color: green;
+			border: none;
+			color: white;
+			padding: 15px 32px;
+			text-align: center;
+			display: inline-block;
+			font-size: 16px;
+			margin: 4px 2px;
+			cursor: pointer;
+		}
+	</style>
+	<script type="text/javascript">
+		var depth;
+		var treeArray;
+		var table;
+		var funFacts = [
+			"A shade tree can help cool your home or office building by as much as 20 degrees in the summertime.",
+			"Trees help improve our water quality as they slow and filter rainfall.",
+			"No other organism on Earth lives as long as a tree.",
+			"Have you ever knocked on wood for good luck? That superstition may have originated with primitive peoples who believed benevolent spirits lived in the trees."];
+		var FUN_FACT_SOURCE = "hgtv.com";
+		function depthEntered(){
+			table = document.getElementById("table");
+			depth = document.getElementById("depth").value;
+			console.log(isNaN("j"));
+			if (depth != "" && !isNaN(depth)){
+				console.log(depth);
+				clearTable();
+				document.getElementById("depth_error_text").innerHTML = "";
+				generateTable();
+			} else {
+				document.getElementById("depth_error_text").innerHTML = "Depth must be a non-negative integer.";
+			}
+		}
+
+		function clearTable(){
+			while (table.firstChild) {
+				table.removeChild(table.firstChild);
+			}
+		}
+
+		function generateTable() {
+			var table = document.querySelector("table");
+			for (var i = 0; i < depth; i++) {
+				let row = table.insertRow();
+				for (var j = 0; j < Math.pow(2, i); j++) {
+					var cell = row.insertCell();
+					cell.colSpan = Math.pow(2,depth-1-i);
+					cell.align = "center";
+					var input = document.createElement("input");
+					input.type = "text";
+					input.size = "5";
+					input.id = "cell"+i+j;
+					input.placeholder = "value";
+					cell.appendChild(input);
+				}
+			}
+		}
+		function treeTextHelper(i, j){
+			if (depth == null || depth == ""){
+				return "Enter depth first, please!";
+			}
+			if (i == depth) {
+				return "Empty";
+			}
+			var cellValue = document.getElementById("cell"+i+j).value;
+			if (cellValue == "")
+				return "Empty";
+
+			return "Node(" + treeTextHelper(i+1, j*2) + "," + cellValue + "," + treeTextHelper(i+1, j*2+1) + ")";
+		}
+		function generateTreeText(){
+			console.log(depth);
+			document.getElementById("treeText").innerHTML = treeTextHelper(0,0);
+		}
+
+		function randNum(max){
+			return Math.floor(Math.random() * max) - 1;
+		}
+
+		function setFunFact(){
+			var randFact = funFacts[randNum(funFacts.length)];
+			document.getElementById("fact").innerHTML = "Fun Tree Fact! " + randFact + " (" + FUN_FACT_SOURCE + ")";
+		}
+	</script>
+</head>
+<body align="center" style="font-family:Comic Sans MS" onload="setFunFact()">
+	<marquee id="fact" behavior="alternate" bgcolor ="green" style="color:white"></marquee>
+	<div>
+		<h1 style="color:green">Tree-to-SML Text Converter</h1>
+		<p style="color:gray">
+			This tree-to-text converter will fit the datatype:
+			<br>
+			<tt>datatype 'a tree = Empty | Node of 'a tree * 'a * 'a tree</tt>.
+		</p>
+		<div align="center">
+			<form>
+				1. Tree Depth: <input type="text" name="depth" id="depth"><br>
+				<p id="depth_error_text" style="color:red"></p>
+				<input type="button" class="button" value="Enter tree depth" onclick="depthEntered()">
+			</form>
+			<br>
+			2. Enter node values
+			<br>
+			<br>
+			<table id = "table" style="border:2px solid green">
+				<tr><th>Node table will appear here<th></tr>
+			</table>
+			<br>
+			<button class="button" onclick="generateTreeText()">Generate SML Text</button>
+			<p>Copy and paste the text below:</p>
+			<tt><p id="treeText" style="border:1px solid blue; padding:5px">~SML Text will appear here~</p></tt>
+		</div>
+	</div>
+</body>
+</html>
