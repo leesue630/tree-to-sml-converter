@@ -47,18 +47,26 @@
 
 		function generateTable() {
 			var table = document.querySelector("table");
-			for (var i = 0; i < depth; i++) {
+			if (depth == 0){
 				let row = table.insertRow();
-				for (var j = 0; j < Math.pow(2, i); j++) {
-					var cell = row.insertCell();
-					cell.colSpan = Math.pow(2,depth-1-i);
-					cell.align = "center";
-					var input = document.createElement("input");
-					input.type = "text";
-					input.size = "5";
-					input.id = "cell"+i+j;
-					input.placeholder = "value";
-					cell.appendChild(input);
+				let cell = row.insertCell();
+				var text = document.createTextNode("Zero depth");
+				cell.appendChild(text);
+			}
+			else {
+				for (var i = 0; i < depth; i++) {
+					let row = table.insertRow();
+					for (var j = 0; j < Math.pow(2, i); j++) {
+						var cell = row.insertCell();
+						cell.colSpan = Math.pow(2,depth-1-i);
+						cell.align = "center";
+						var input = document.createElement("input");
+						input.type = "text";
+						input.size = "5";
+						input.id = "cell"+i+j;
+						input.placeholder = "value";
+						cell.appendChild(input);
+					}
 				}
 			}
 		}
