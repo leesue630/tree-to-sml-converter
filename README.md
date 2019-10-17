@@ -7,5 +7,6 @@ The datatype of the output tree for this converter is defined as:
 datatype 'a tree = Empty | Node of 'a tree * 'a * 'a tree.
 ```
 
+Valid nodes (aka non-empty nodes that have a valid path to the root) are given a green border when the SML text is generated.
 
 Built with HTML, CSS, JavaScript.
