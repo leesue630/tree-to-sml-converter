@@ -3,320 +3,44 @@
   <head>
     <link rel="stylesheet" type="text/css" href="style.css" />
     <title>Tree-to-SML Text Converter</title>
-    <style>
-      .button {
-        background-color: green;
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-      }
-    </style>
-    <script type="text/javascript">
-      var depth;
-      var treeArray;
-      var table;
-      var activeTab;
-      var funFacts = [
-        "A shade tree can help cool your home or office building by as much as 20 degrees in the summertime.",
-        "Trees help improve our water quality as they slow and filter rainfall.",
-        "No other organism on Earth lives as long as a tree.",
-        "Have you ever knocked on wood for good luck? That superstition may have originated with primitive peoples who believed benevolent spirits lived in the trees.",
-        "Trees have an important role in preventing soil erosion - their net-like roots enable them to lock soil in place, and their leafy canopies reduce the force of wind and rain to minimize soil displacement."
-      ];
-      var FUN_FACT_SOURCE = "hgtv.com";
-
-      function depthEntered() {
-        table = document.getElementById("table");
-        depth = document.getElementById("depth").value;
-        // console.log(isNaN("j"));
-        if (depth != "" && !isNaN(depth)) {
-          if (depth > 10) {
-            document.getElementById("depth_error_text").innerHTML =
-              "Depth <10 pls :(";
-          } else {
-            clearTable();
-            document.getElementById("depth_error_text").innerHTML = "";
-            generateTable();
-          }
-        } else {
-          document.getElementById("depth_error_text").innerHTML =
-            "Depth must be a non-negative integer.";
-        }
-      }
-
-      function clearTable() {
-        while (table.firstChild) {
-          table.removeChild(table.firstChild);
-        }
-      }
-
-      function resetPage() {
-        table = document.getElementById("table");
-        clearTable();
-        let row = table.insertRow();
-        let cell = row.insertCell();
-        var text = document.createTextNode("Node table will appear here");
-		cell.appendChild(text);
-		document.getElementById("table_warning_text").innerHTML = "";
-		document.getElementById("smlText").innerHTML = "~SML Text will appear here~";
-      }
-
-      function createUIBFunction(i, j) {
-        return function() {
-          uncolorInputBorder(i, j);
-        };
-      }
-
-    //   function createDLIFunction(i, j) {
-    //     return function() {
-    //       disableLeafInput(i, j);
-    //     };
-    //   }
-
-      function uncolorInputBorder(i, j) {
-        var cellij = document.getElementById("cell" + i + j);
-        console.log("uncolor: " + i + "," + j);
-        cellij.style = "border: 1px solid lightgray;";
-      }
-
-    //   function disableLeafInput(i, j) {
-    //     document.getElementById("leafValue" + i + j).disabled = true;
-    //   }
-
-      function newTreeCell(i, j) {
-        var input = document.createElement("input");
-        input.type = "text";
-        input.size = "5";
-        input.id = "cell" + i + j;
-        input.placeholder = "value";
-        input.style = "border: 1px solid lightgray;";
-        input.onchange = createUIBFunction(i, j);
-        return input;
-	  }
-
-      function newShrubCell(i, j) {
-        // create div container
-        // <div class = "left-inner" align = "left" width = "250px">
-        var div = document.createElement("div");
-        div.id = "cell" + i + j;
-        div.classList.add("left-inner");
-        div.classList.add("shrub-div");
-        div.align = "left";
-        div.style = "border: 1px solid lightgray;";
-
-        // if not last level, cell has Node or Leaf option
-        if (i < depth - 1) {
-          // create Node radio button
-          // <input type = "radio" id = "nodeBtnij" name = "radioij" onchange = __ onclick = "document.getElementById('leafValueij').disabled = true;">
-          var nodeBtn = document.createElement("input");
-          nodeBtn.type = "radio";
-          nodeBtn.id = "nodeBtn" + i + j;
-          nodeBtn.name = "radio" + i + j;
-        //   nodeBtn.onchange = createUIBFunction(i, j);
-		//   nodeBtn.onclick = createDLIFunction(i, j);
-
-          div.appendChild(nodeBtn);
-
-          div.innerHTML += "Node<br>";
-
-          // create Leaf radio button
-          // <input type = "radio" id = "leafBtnij" name = "radioij" onchange = __ onclick = "document.getElementById('leafValueij').disabled = false;">
-          var leafBtn = document.createElement("input");
-          leafBtn.type = "radio";
-          leafBtn.id = "leafBtn" + i + j;
-          leafBtn.name = "radio" + i + j;
-        //   leafBtn.onchange = createUIBFunction(i, j);
-          // leafBtn.onclick = function () {
-          // 	document.getElementById("leafValue' + i + j + '").disabled = false;
-          // };
-
-          div.appendChild(leafBtn);
-        }
-
-        div.innerHTML +=
-          'Leaf: <input type="text" size = "5" name="value" id="leafValue' +
-          i + j +
-          '" placeholder="value">';
-
-        return div;
-      }
-
-      function generateTable() {
-        var table = document.querySelector("table");
-        if (depth == 0) {
-          let row = table.insertRow();
-          let cell = row.insertCell();
-          var text = document.createTextNode("Zero depth");
-          cell.appendChild(text);
-        } else {
-          for (var i = 0; i < depth; i++) {
-            let row = table.insertRow();
-            for (var j = 0; j < Math.pow(2, i); j++) {
-              var cell = row.insertCell();
-              cell.colSpan = Math.pow(2, depth - 1 - i);
-              cell.align = "center";
-              switch (activeTab) {
-                case "tree":
-                  cell.appendChild(newTreeCell(i, j));
-                  break;
-                case "shrub":
-                  cell.appendChild(newShrubCell(i, j));
-                  break;
-              }
-            }
-          }
-        }
-      }
-
-      function treeTextHelper(i, j) {
-        if (depth == null || depth == "") {
-          return "Enter depth first, please!";
-        }
-        if (i == depth) {
-          // shouldn't be possible for shrubs
-          return "Empty";
-        }
-        var cellij = document.getElementById("cell" + i + j);
-        switch (activeTab) {
-          case "tree":
-            if (cellij.value == "") return "Empty";
-            cellij.setAttribute("style", "border: 2px solid green;");
-            return (
-              "Node(" +
-              treeTextHelper(i + 1, j * 2) +
-              "," +
-              cellij.value +
-              "," +
-              treeTextHelper(i + 1, j * 2 + 1) +
-              ")"
-            );
-            break;
-          case "shrub":
-			// leaf cell
-            if (i == (depth-1) || document.getElementById("leafBtn" + i + j).checked) {
-              var leafvalueij = document.getElementById("leafValue" + i + j);
-			  cellij.setAttribute("style", "border: 2px solid green;");
-			  if (leafvalueij.value == "") 
-			  	document.getElementById("table_warning_text").innerHTML =
-              	"Warning: Empty leaf value";
-              return "Leaf(" + leafvalueij.value + ")";
-			}
-			// node cell
-            if (document.getElementById("nodeBtn" + i + j).checked) {
-              cellij.setAttribute("style", "border: 2px solid green;");
-              return (
-                "Node(" +
-                treeTextHelper(i + 1, j * 2) +
-                "," +
-                treeTextHelper(i + 1, j * 2 + 1) +
-                ")"
-              );
-			}
-			
-			if (i == 0) {
-              return "Empty";
-            } else {
-              throw "Node without valid children";
-            }
-            break;
-        }
-      }
-
-      function generateText() {
-		document.getElementById("table_warning_text").innerHTML = "";
-        // console.log(depth);
-        for (var i = 0; i < depth; i++) {
-          for (var j = 0; j < Math.pow(2, i); j++) {
-            uncolorInputBorder(i, j);
-          }
-        }
-        var text;
-        try {
-          text = treeTextHelper(0, 0);
-        } catch (e) {
-		  console.log(e);
-          text = "Node must have 2 valid children.";
-        }
-        document.getElementById("smlText").innerHTML = text;
-      }
-
-      function randNum(max) {
-        return Math.floor(Math.random() * max);
-      }
-
-      function setFunFact() {
-        var randFact = funFacts[randNum(funFacts.length)];
-        document.getElementById("fact").innerHTML =
-          "Fun Tree Fact! " + randFact + " (" + FUN_FACT_SOURCE + ")";
-      }
-
-      function openTab(evt, tabName) {
-        // Declare all variables
-        var i, tabcontent, tablinks;
-        activeTab = tabName;
-
-        // Get all elements with class="tabcontent" and hide them
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-          tabcontent[i].style.display = "none";
-        }
-
-        // Get all elements with class="tablinks" and remove the class "active"
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-          tablinks[i].className = tablinks[i].className.replace(" active", "");
-        }
-
-        // Show the current tab, and add an "active" class to the button that opened the tab
-        document.getElementById(tabName).style.display = "block";
-        evt.currentTarget.className += " active";
-        resetPage();
-      }
-    </script>
   </head>
-  <body align="center" style="font-family:Comic Sans MS" onload="setFunFact()">
-    <marquee
-      id="fact"
-      behavior="alternate"
-      bgcolor="green"
-      style="color:white"
-    ></marquee>
+  <body align="center" onload="setFunFact()">
+    <marquee id="fact" behavior="alternate" bgcolor="green"></marquee>
     <div class="tab">
       <button
-        class="tablinks"
+        class="tab-links"
         onclick="openTab(event, 'tree')"
-        id="defaultOpen"
+        id="default_open"
       >
         Tree
       </button>
-      <button class="tablinks" onclick="openTab(event, 'shrub')">
+      <button class="tab-links" onclick="openTab(event, 'shrub')">
         Shrub
       </button>
     </div>
 
     <!-- Tab content -->
-    <div id="tree" class="tabcontent">
-      <h1 style="color:green">Tree-to-SML Text Converter</h1>
+    <div id="tree" class="tab-content">
+      <h1>Tree-to-SML Text Converter</h1>
       This tree-to-text converter will fit the datatype:
       <br />
-      <p style="width:250px; text-align: left; display: inline-block">
-        <tt>datatype 'a tree = Empty<br />| Node of 'a tree * 'a * 'a tree</tt>.
+      <p class="left-inner type-p">
+        <tt
+          >datatype 'a tree = Empty<br />
+          | Node of 'a tree * 'a * 'a tree</tt
+        >.
       </p>
     </div>
 
-    <div id="shrub" class="tabcontent">
-      <h1 style="color:green">Shrub-to-SML Text Converter</h1>
+    <div id="shrub" class="tab-content">
+      <h1>Shrub-to-SML Text Converter</h1>
       This shrub-to-text converter will fit the datatype:
       <br />
-      <p class="left-inner" style="width:250px">
+      <p class="left-inner type-p">
         <tt
-          >datatype 'a shrub = Empty <br />| Leaf of 'a <br />| Node of 'a shrub
-          * 'a shrub</tt
+          >datatype 'a shrub = Empty <br />
+          | Leaf of 'a <br />
+          | Node of 'a shrub * 'a shrub</tt
         >.
       </p>
     </div>
@@ -324,10 +48,10 @@
     <div align="center">
       <form>
         1. Depth: <input type="text" name="depth" id="depth" /><br />
-        <p id="depth_error_text" style="color:red"></p>
+        <p id="depth_error_text" class="error-text"></p>
         <input
           type="button"
-          class="button"
+          class="btn"
           value="Enter depth"
           onclick="depthEntered()"
         />
@@ -336,30 +60,26 @@
       2. Enter node values
       <br />
       <br />
-      <table id="table" style="border:2px solid green"></table>
+      <table id="table"></table>
+      <br />
+      <p id="table_warning_text" class="error-text"></p>
 
-	  <br />
-	  <p id="table_warning_text" style="color:red"></p>
-
-      <button class="button" onclick="generateText()">
+      <button class="btn" onclick="generateText()">
         Generate SML Text
       </button>
       <p>3. Copy and paste the text below:</p>
       <tt
-        ><p id="smlText" style="border:1px solid blue; padding:5px">
+        ><p id="sml_text" class="output-p">
           ~SML Text will appear here~
         </p></tt
       >
       <p style="color:gray">
         Note: only nodes with non-empty parents (aka a valid path to the root)
-        will appear in the output
+        will appear in the output.
         <br />
         Leave values blank to generate an unbalanced tree/shrub.
       </p>
     </div>
-
-    <script>
-      document.getElementById("defaultOpen").click();
-    </script>
+    <script type="text/javascript" src="script.js"></script>
   </body>
 </html>
