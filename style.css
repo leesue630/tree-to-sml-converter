@@ -11,13 +11,26 @@ marquee {
 }
 
 table {
-  border:2px solid green;
+  border: 2px solid green;
+}
+
+td {
+  min-width: 50px;
+}
+
+.gr-bdr {
+  border: 2px solid green;
+}
+
+#sml_form {
+  width: 100%;
+  text-align: center;
 }
 
 .gif-mq {
-  position:absolute; 
-  width:5%;
-  height:80px;
+  position: absolute;
+  width: 5%;
+  height: 80px;
 }
 
 .btn {
@@ -42,9 +55,10 @@ table {
   color: red;
 }
 
-.output-p {
-  border:1px solid blue;
-  padding:5px;
+.sml-box {
+  font-family: monospace;
+  border: 1px solid blue;
+  padding: 5px;
 }
 
 /* Style the buttons that are used to open the tab content */
@@ -80,6 +94,12 @@ table {
 .left-inner {
   display: inline-block;
   text-align: left;
+}
+
+.div-cell {
+  display: inline-block;
+  border: 1px solid lightgray;
+  min-width: 75px;
 }
 
 .type-p {

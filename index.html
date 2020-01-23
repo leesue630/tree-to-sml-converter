@@ -5,11 +5,61 @@
     <title>Tree-to-SML Text Converter</title>
   </head>
   <body align="center" onload="setFunFact()">
-    <marquee class="gif-mq" behavior=scroll direction=down scrollamount=4 scrolldelay=30 height=100 style='left:14%;'><img src=http://dl8.glitter-graphics.net/pub/129/129498dwdy8d462k.gif border=0></marquee>
-    <marquee class="gif-mq" behavior=scroll direction=down scrollamount=5 scrolldelay=43 height=100 style='left:0%;'><img src=http://dl8.glitter-graphics.net/pub/129/129498dwdy8d462k.gif border=0></marquee>
-    <marquee class="gif-mq" behavior=scroll direction=down scrollamount=4 scrolldelay=40 height=100 style='left:4%;'><img src=http://dl8.glitter-graphics.net/pub/129/129498dwdy8d462k.gif border=0></marquee>
-    <marquee class="gif-mq" behavior=scroll direction=down scrollamount=2 scrolldelay=21 height=100 style='left:12%'><img src=http://dl8.glitter-graphics.net/pub/129/129498dwdy8d462k.gif border=0></marquee>
-    <marquee class="gif-mq" behavior=scroll direction=down scrollamount=3 scrolldelay=24 height=100 style='left:28%;'><img src=http://dl8.glitter-graphics.net/pub/129/129498dwdy8d462k.gif border=0></marquee>
+    <marquee
+      class="gif-mq"
+      behavior="scroll"
+      direction="down"
+      scrollamount="4"
+      scrolldelay="30"
+      height="100"
+      style="left:14%;"
+      ><img src=http://dl8.glitter-graphics.net/pub/129/129498dwdy8d462k.gif
+      border=0></marquee
+    >
+    <marquee
+      class="gif-mq"
+      behavior="scroll"
+      direction="down"
+      scrollamount="5"
+      scrolldelay="43"
+      height="100"
+      style="left:0%;"
+      ><img src=http://dl8.glitter-graphics.net/pub/129/129498dwdy8d462k.gif
+      border=0></marquee
+    >
+    <marquee
+      class="gif-mq"
+      behavior="scroll"
+      direction="down"
+      scrollamount="4"
+      scrolldelay="40"
+      height="100"
+      style="left:4%;"
+      ><img src=http://dl8.glitter-graphics.net/pub/129/129498dwdy8d462k.gif
+      border=0></marquee
+    >
+    <marquee
+      class="gif-mq"
+      behavior="scroll"
+      direction="down"
+      scrollamount="2"
+      scrolldelay="21"
+      height="100"
+      style="left:12%"
+      ><img src=http://dl8.glitter-graphics.net/pub/129/129498dwdy8d462k.gif
+      border=0></marquee
+    >
+    <marquee
+      class="gif-mq"
+      behavior="scroll"
+      direction="down"
+      scrollamount="3"
+      scrolldelay="24"
+      height="100"
+      style="left:28%;"
+      ><img src=http://dl8.glitter-graphics.net/pub/129/129498dwdy8d462k.gif
+      border=0></marquee
+    >
 
     <marquee id="fact" behavior="alternate" bgcolor="green"></marquee>
     <div class="tab">
@@ -22,6 +72,9 @@
       </button>
       <button class="tab-links" onclick="openTab(event, 'shrub')">
         Shrub
+      </button>
+      <button class="tab-links" onclick="openTab(event, 'sml')">
+        SML
       </button>
     </div>
 
@@ -51,22 +104,40 @@
       </p>
     </div>
 
-    <div align="center">
-      <form>
-        1. Depth: <input type="text" name="depth" id="depth" /><br />
-        <p id="depth_error_text" class="error-text"></p>
-        <input
-          type="button"
-          class="btn"
-          value="Enter depth"
-          onclick="depthEntered()"
-        />
-      </form>
+    <div id="sml" class="tab-content">
+      <h1>SML-to-Tree Text Converter</h1>
+      This text-to-tree converter will fit the datatype:
       <br />
-      2. Enter node values
+      <p class="left-inner type-p">
+        <tt
+          >datatype 'a tree = Empty<br />
+          | Node of 'a tree * 'a * 'a tree</tt
+        >.
+      </p>
+    </div>
+
+    <div align="center" id="to_sml_content">
+      1. Depth:
+      <input
+        type="text"
+        name="depth_form"
+        id="depth_form"
+        class="gr-bdr"
+      /><br />
+      <p id="depth_error_text" class="error-text"></p>
+      <input
+        id="enter_depth_btn"
+        type="button"
+        class="btn"
+        value="Enter depth"
+        onclick="depthEntered()"
+      />
       <br />
       <br />
-      <table id="table"></table>
+      2. Enter node values:
+      <br />
+      <br />
+      <table id="input_table"></table>
       <br />
       <p id="table_warning_text" class="error-text"></p>
 
@@ -75,7 +146,7 @@
       </button>
       <p>3. Copy and paste the text below:</p>
       <tt
-        ><p id="sml_text" class="output-p">
+        ><p id="sml_output_text" class="sml-box">
           ~SML Text will appear here~
         </p></tt
       >
@@ -86,6 +157,38 @@
         Leave values blank to generate an unbalanced tree/shrub.
       </p>
     </div>
-    <script type="text/javascript" src="script.js"></script>
+
+    <div align="center" id="from_sml_content">
+      1. Enter SML Text:<br />
+      <br />
+      <input
+        type="text"
+        name="sml_form"
+        id="sml_form"
+        width="100%"
+        class="sml-box"
+      /><br />
+      <p id="sml_error_text" class="error-text"></p>
+      <input
+        id="generate_tree_btn"
+        type="button"
+        class="btn"
+        value="Generate Tree"
+        onclick="smlEntered()"
+      />
+      <br />
+      <br />
+      2. View your tree below:
+      <br />
+      <br />
+      <table id="output_table"></table>
+      <p style="color:gray">
+        Note: does not work if parentheses or commas are enclosed in quotes.
+        <br />
+        Empty nodes not shown.
+      </p>
+    </div>
+    <script type="text/javascript" src="to-sml-script.js"></script>
+    <script type="text/javascript" src="from-sml-script.js"></script>
   </body>
 </html>

@@ -14,8 +14,7 @@ var funFacts = [
 // called when "Enter depth" clicked
 // clears and generates table if depth is valid
 function depthEntered() {
-  table = document.getElementById("table");
-  depth = document.getElementById("depth").value;
+  depth = document.getElementById("depth_form").value;
   if (depth != "" && !isNaN(depth)) {
     if (depth > 10) {
       document.getElementById("depth_error_text").innerHTML =
@@ -23,7 +22,7 @@ function depthEntered() {
     } else {
       clearTable();
       document.getElementById("depth_error_text").innerHTML = "";
-      generateTable();
+      generateInputTable();
     }
   } else {
     document.getElementById("depth_error_text").innerHTML =
@@ -37,15 +36,28 @@ function clearTable() {
   }
 }
 
-function resetPage() {
-  table = document.getElementById("table");
+function resetTable() {
+  switch (activeTab) {
+    case "sml":
+      table = document.getElementById("output_table");
+      break;
+    default:
+      table = document.getElementById("input_table");
+  }
   clearTable();
   let row = table.insertRow();
   let cell = row.insertCell();
   var text = document.createTextNode("Node table will appear here");
   cell.appendChild(text);
-  document.getElementById("table_warning_text").innerHTML = "";
-  document.getElementById("sml_text").innerHTML = "~SML Text will appear here~";
+}
+
+function resetPage() {
+  resetTable();
+  if (activeTab.localeCompare("sml") != 0) {
+    document.getElementById("table_warning_text").innerHTML = "";
+    document.getElementById("sml_output_text").innerHTML =
+      "~SML Text will appear here~";
+  }
 }
 
 function createUIBFunction(i, j) {
@@ -61,10 +73,10 @@ function createDLIFunction(i, j) {
 }
 
 function createELIFunction(i, j) {
-    return function() {
-      enableLeafInput(i, j);
-    };
-  }
+  return function() {
+    enableLeafInput(i, j);
+  };
+}
 
 function uncolorInputBorder(i, j) {
   var cellij = document.getElementById("cell" + i + j);
@@ -143,13 +155,11 @@ function newShrubCell(i, j) {
   return div;
 }
 
-function generateTable() {
-  var table = document.querySelector("table");
+function generateInputTable() {
   if (depth == 0) {
     let row = table.insertRow();
     let cell = row.insertCell();
-    var text = document.createTextNode("Zero depth");
-    cell.appendChild(text);
+    cell.innerHTML = "Zero depth";
   } else {
     for (var i = 0; i < depth; i++) {
       let row = table.insertRow();
@@ -164,10 +174,18 @@ function generateTable() {
           case "shrub":
             cell.appendChild(newShrubCell(i, j));
             if (i < depth - 1) {
-              document.getElementById("node_btn" + i + j).onchange = createUIBFunction(i, j);
-              document.getElementById("node_btn" + i + j).onclick = createDLIFunction(i, j);
-              document.getElementById("leaf_btn" + i + j).onchange = createUIBFunction(i, j);
-              document.getElementById("leaf_btn" + i + j).onclick = createELIFunction(i, j);
+              document.getElementById(
+                "node_btn" + i + j
+              ).onchange = createUIBFunction(i, j);
+              document.getElementById(
+                "node_btn" + i + j
+              ).onclick = createDLIFunction(i, j);
+              document.getElementById(
+                "leaf_btn" + i + j
+              ).onchange = createUIBFunction(i, j);
+              document.getElementById(
+                "leaf_btn" + i + j
+              ).onclick = createELIFunction(i, j);
             }
             break;
         }
@@ -246,7 +264,7 @@ function generateText() {
     console.log(e);
     text = "Node must have 2 valid children.";
   }
-  document.getElementById("sml_text").innerHTML = text;
+  document.getElementById("sml_output_text").innerHTML = text;
 }
 
 function randNum(max) {
@@ -261,25 +279,49 @@ function setFunFact() {
 
 function openTab(evt, tabName) {
   // Declare all variables
-  var i, tabcontent, tablinks;
+  var i, tabContent, tabLinks, toSMLContent, fromSMLContent;
   activeTab = tabName;
 
-  // Get all elements with class="tabcontent" and hide them
-  tabcontent = document.getElementsByClassName("tab-content");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
+  // Get all elements with class="tab-content" and hide them
+  tabContent = document.getElementsByClassName("tab-content");
+  for (i = 0; i < tabContent.length; i++) {
+    tabContent[i].style.display = "none";
   }
 
-  // Get all elements with class="tablinks" and remove the class "active"
-  tablinks = document.getElementsByClassName("tab-links");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  // Get all elements with class="tab-links" and remove the class "active"
+  tabLinks = document.getElementsByClassName("tab-links");
+  for (i = 0; i < tabLinks.length; i++) {
+    tabLinks[i].className = tabLinks[i].className.replace(" active", "");
   }
+  evt.currentTarget.className += " active";
 
   // Show the current tab, and add an "active" class to the button that opened the tab
   document.getElementById(tabName).style.display = "block";
-  evt.currentTarget.className += " active";
+
+  toSMLContent = document.getElementById("to_sml_content");
+  fromSMLContent = document.getElementById("from_sml_content");
+
+  if (tabName.localeCompare("sml")) {
+    toSMLContent.style.display = "block";
+    fromSMLContent.style.display = "none";
+  } else {
+    toSMLContent.style.display = "none";
+    fromSMLContent.style.display = "block";
+  }
   resetPage();
 }
+
+const depthForm = document.getElementById("depth_form");
+depthForm.addEventListener("keyup", function(event) {
+  if (event.key === "Enter") {
+    document.getElementById("enter_depth_btn").onclick();
+  }
+});
+const smlForm = document.getElementById("sml_form");
+smlForm.addEventListener("keyup", function(event) {
+  if (event.key === "Enter") {
+    document.getElementById("generate_tree_btn").onclick();
+  }
+});
 
 document.getElementById("default_open").click();
