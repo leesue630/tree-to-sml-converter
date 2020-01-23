@@ -14,6 +14,12 @@ table {
   border:2px solid green;
 }
 
+.gif-mq {
+  position:absolute; 
+  width:5%;
+  height:80px;
+}
+
 .btn {
   background-color: green;
   border: none;

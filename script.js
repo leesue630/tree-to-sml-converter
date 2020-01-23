@@ -54,32 +54,42 @@ function createUIBFunction(i, j) {
   };
 }
 
-//   function createDLIFunction(i, j) {
-//     return function() {
-//       disableLeafInput(i, j);
-//     };
-//   }
+function createDLIFunction(i, j) {
+  return function() {
+    disableLeafInput(i, j);
+  };
+}
+
+function createELIFunction(i, j) {
+    return function() {
+      enableLeafInput(i, j);
+    };
+  }
 
 function uncolorInputBorder(i, j) {
   var cellij = document.getElementById("cell" + i + j);
   colorCell(cellij, "base");
 }
 
-//   function disableLeafInput(i, j) {
-//     document.getElementById("leaf_value" + i + j).disabled = true;
-//   }
+function disableLeafInput(i, j) {
+  document.getElementById("leaf_value" + i + j).disabled = true;
+}
 
-function colorCell(cell, color){
-    cell.classList.remove("base-cell");
-    cell.classList.remove("valid-cell");
-    switch (color) {
-        case "base":
-            cell.classList.add("base-cell");
-            break;
-        case "valid":
-            cell.classList.add("valid-cell");
-            break;
-    }
+function enableLeafInput(i, j) {
+  document.getElementById("leaf_value" + i + j).disabled = false;
+}
+
+function colorCell(cell, color) {
+  cell.classList.remove("base-cell");
+  cell.classList.remove("valid-cell");
+  switch (color) {
+    case "base":
+      cell.classList.add("base-cell");
+      break;
+    case "valid":
+      cell.classList.add("valid-cell");
+      break;
+  }
 }
 
 function newTreeCell(i, j) {
@@ -95,7 +105,6 @@ function newTreeCell(i, j) {
 
 function newShrubCell(i, j) {
   // create div container
-  // <div class = "left-inner" align = "left" width = "250px">
   var div = document.createElement("div");
   div.id = "cell" + i + j;
   div.classList.add("left-inner");
@@ -106,37 +115,30 @@ function newShrubCell(i, j) {
   // if not last level, cell has Node or Leaf option
   if (i < depth - 1) {
     // create Node radio button
-    // <input type = "radio" id = "node_btnij" name = "radioij" onchange = __ onclick = "document.getElementById('leaf_valueij').disabled = true;">
     var nodeBtn = document.createElement("input");
     nodeBtn.type = "radio";
     nodeBtn.id = "node_btn" + i + j;
     nodeBtn.name = "radio" + i + j;
-    nodeBtn.onchange = createUIBFunction(i, j);
-    //   nodeBtn.onclick = createDLIFunction(i, j);
-
     div.appendChild(nodeBtn);
 
-    div.innerHTML += "Node<br>";
+    div.innerHTML += "Node<br/>";
 
     // create Leaf radio button
-    // <input type = "radio" id = "leaf_btnij" name = "radioij" onchange = __ onclick = "document.getElementById('leaf_valueij').disabled = false;">
     var leafBtn = document.createElement("input");
     leafBtn.type = "radio";
     leafBtn.id = "leaf_btn" + i + j;
     leafBtn.name = "radio" + i + j;
-    leafBtn.onchange = createUIBFunction(i, j);
-    // leafBtn.onclick = function () {
-    // 	document.getElementById("leaf_value' + i + j + '").disabled = false;
-    // };
-
     div.appendChild(leafBtn);
   }
 
-  div.innerHTML +=
-    'Leaf: <input type="text" size = "5" name="value" id="leaf_value' +
-    i +
-    j +
-    '" placeholder="value">';
+  div.innerHTML += "Leaf: ";
+  var leafValue = document.createElement("input");
+  leafValue.type = "text";
+  leafValue.size = "5";
+  leafValue.id = "leaf_value" + i + j;
+  leafValue.placeholder = "value";
+
+  div.appendChild(leafValue);
 
   return div;
 }
@@ -161,6 +163,12 @@ function generateTable() {
             break;
           case "shrub":
             cell.appendChild(newShrubCell(i, j));
+            if (i < depth - 1) {
+              document.getElementById("node_btn" + i + j).onchange = createUIBFunction(i, j);
+              document.getElementById("node_btn" + i + j).onclick = createDLIFunction(i, j);
+              document.getElementById("leaf_btn" + i + j).onchange = createUIBFunction(i, j);
+              document.getElementById("leaf_btn" + i + j).onclick = createELIFunction(i, j);
+            }
             break;
         }
       }
@@ -275,3 +283,26 @@ function openTab(evt, tabName) {
 }
 
 document.getElementById("default_open").click();
+
+var testnode = document.createElement("input");
+testnode.type = "radio";
+testnode.id = "test_node_btn";
+testnode.name = "test";
+testnode.addEventListener("change", function(e) {
+  console.log(e);
+});
+testnode.onchange = function() {
+  console.log("test_node_btn change");
+  document.getElementById("testinput").disabled = true;
+};
+document.getElementById("table").appendChild(testnode);
+
+var testnode2 = document.createElement("input");
+testnode2.type = "radio";
+testnode2.id = "test_node_btn2";
+testnode2.name = "test";
+testnode2.onchange = function() {
+  console.log("test_node_btn2 change");
+  document.getElementById("testinput").disabled = false;
+};
+document.getElementById("table").appendChild(testnode2);
