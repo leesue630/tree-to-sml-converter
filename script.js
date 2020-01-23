@@ -283,26 +283,3 @@ function openTab(evt, tabName) {
 }
 
 document.getElementById("default_open").click();
-
-var testnode = document.createElement("input");
-testnode.type = "radio";
-testnode.id = "test_node_btn";
-testnode.name = "test";
-testnode.addEventListener("change", function(e) {
-  console.log(e);
-});
-testnode.onchange = function() {
-  console.log("test_node_btn change");
-  document.getElementById("testinput").disabled = true;
-};
-document.getElementById("table").appendChild(testnode);
-
-var testnode2 = document.createElement("input");
-testnode2.type = "radio";
-testnode2.id = "test_node_btn2";
-testnode2.name = "test";
-testnode2.onchange = function() {
-  console.log("test_node_btn2 change");
-  document.getElementById("testinput").disabled = false;
-};
-document.getElementById("table").appendChild(testnode2);
