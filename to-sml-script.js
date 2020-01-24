@@ -16,9 +16,9 @@ var funFacts = [
 function depthEntered() {
   depth = document.getElementById("depth_form").value;
   if (depth != "" && !isNaN(depth)) {
-    if (depth > 10) {
+    if (depth > 6) {
       document.getElementById("depth_error_text").innerHTML =
-        "Depth <10 pls :(";
+        "Depth <=6 pls :(";
     } else {
       clearTable();
       document.getElementById("depth_error_text").innerHTML = "";

@@ -55,35 +55,53 @@ function smlEntered() {
   }
 }
 
+String.prototype.trimLeft = function(charlist) {
+  if (charlist === undefined) {
+    charlist = " ";
+  }
+
+  return this.replace(new RegExp("^[" + charlist + "]+"), "");
+};
+
 // returns array of [dict, depth] with dict = {<row><col> : <value>}
 function smlToDict(sml, r, c) {
   var dict = [];
   var depth = r;
+  var sml = sml.trimLeft().trimRight();
   if (sml.localeCompare("Empty") == 0) {
     return [dict, depth];
   } else {
     var p = 0; // unbalanced paren tracker
-    var leftResult, leftDict, rightResult, rightDict, value;
-    if (!sml.startsWith("Node("))
-      throw "Invalid SML Tree: doesn't start with Node( or Empty";
+    var leftResult, leftDict, rightResult, rightDict;
+    var leftStr, value, rightStr;
+    if (!sml.startsWith("Node"))
+      throw "Invalid SML Tree: doesn't start with Node or Empty";
+    sml = sml.trimLeft("Node").trimLeft();
+    sml = sml.substring(1);
     var len = sml.length;
-    for (var i = 5; i < len; i++) {
+    for (var i = 0; i < len; i++) {
       switch (sml.charAt(i)) {
         case ",":
+          // console.log("comma found");
           if (p == 0) {
-            console.log('left: "' + sml.substring(5, i) + '"');
-            leftResult = smlToDict(sml.substring(5, i), r + 1, c * 2);
+            leftStr = sml.substring(0, i);
+            // console.log('left: "' + leftStr + '"');
+            leftResult = smlToDict(leftStr, r + 1, c * 2);
             leftDict = leftResult[0];
             var q = 0;
-            for (var j = i + 1; j < len - (r + 1); j++) {
+            for (var j = i + 1; j < len - 1; j++) {
               switch (sml.charAt(j)) {
                 case ",":
                   if (q == 0) {
-                    console.log('value: "' + value + '"');
-                    value = sml.substring(i + 1, j);
-                    console.log(
-                      'right: "' + sml.substring(j + 1, len - 1) + '"'
-                    );
+                    value = sml
+                      .substring(i + 1, j)
+                      .trimLeft()
+                      .trimRight();
+                    // console.log('value: "' + value + '"');
+                    rightStr = sml.substring(j + 1, len - 1);
+                    // console.log(
+                    //   'right: "' + rightStr + '"'
+                    // );
                     rightResult = smlToDict(
                       sml.substring(j + 1, len - 1),
                       r + 1,
