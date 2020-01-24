@@ -18,7 +18,7 @@
     >
 
     <marquee id="fact" behavior="alternate" bgcolor="green"></marquee>
-    
+
     <div class="tab" align="center">
       <button
         class="tab-links"
@@ -75,13 +75,10 @@
 
     <div align="center" id="to_sml_content">
       1. Depth:
-      <input
-        type="text"
-        name="depth_form"
-        id="depth_form"
-        class="gr-bdr"
-      /><br />
+      <input type="text" name="depth_form" id="depth_form" class="form" placeholder="e.g. 3"/>
+
       <p id="depth_error_text" class="error-text"></p>
+
       <input
         id="enter_depth_btn"
         type="button"
@@ -92,15 +89,18 @@
       <br />
       <br />
       2. Enter node values:
-      <br />
+      <!-- <br /> -->
       <br />
       <table id="input_table"></table>
-      <br />
+
       <p id="table_warning_text" class="error-text"></p>
 
-      <button class="btn" onclick="generateText()">
-        Generate SML Text
-      </button>
+      <input
+        type="button"
+        class="btn"
+        value="Generate SML Text"
+        onclick="generateText()"
+      />
       <p>3. Copy and paste the text below:</p>
       <tt
         ><p id="sml_output_text" class="sml-box">
@@ -117,13 +117,14 @@
 
     <div align="center" id="from_sml_content">
       1. Enter SML Text:<br />
-      <br />
+      <!-- <br /> -->
       <input
         type="text"
         name="sml_form"
         id="sml_form"
-        width="100%"
-        class="sml-box"
+        style="width: 100%"
+        class="sml-box form"
+        placeholder="e.g. Node(Empty, 2, Empty)"
       /><br />
       <p id="sml_error_text" class="error-text"></p>
       <input
@@ -135,9 +136,8 @@
       />
       <br />
       <br />
-      2. View your tree below:
-      <br />
-      <br />
+      2. View your tree below:<br />
+      <!-- <br /> -->
       <table id="output_table"></table>
       <p style="color:gray">
         Note: does not work if parentheses or commas are enclosed in quotes.

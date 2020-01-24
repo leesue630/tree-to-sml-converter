@@ -12,13 +12,22 @@ marquee {
 
 table {
   border: 2px solid green;
+  font-family: monospace;
+  color: gray;
+  padding: 5px;
+  margin: 10px;
+}
+
+.form {
+  padding: 5px;
+  margin: 10px;
 }
 
 td {
   min-width: 50px;
 }
 
-.gr-bdr {
+#depth_form {
   border: 2px solid green;
 }
 
@@ -56,6 +65,7 @@ td {
 }
 
 .sml-box {
+  box-sizing: border-box;
   font-family: monospace;
   border: 1px solid blue;
   padding: 5px;
