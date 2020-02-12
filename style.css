@@ -1,11 +1,3 @@
-body {
-  font-family: "Comic Sans MS";
-}
-
-h1 {
-  color: green;
-}
-
 marquee {
   color: white;
 }
@@ -14,7 +6,6 @@ table {
   border: 2px solid green;
   font-family: monospace;
   color: gray;
-  padding: 5px;
   margin: 10px;
 }
 
@@ -29,11 +20,6 @@ td {
 
 #depth_form {
   border: 2px solid green;
-}
-
-#sml_form {
-  width: 100%;
-  text-align: center;
 }
 
 .gif-mq {
@@ -69,6 +55,8 @@ td {
   font-family: monospace;
   border: 1px solid blue;
   padding: 5px;
+  width: 95%;
+  text-align: center;
 }
 
 /* Style the buttons that are used to open the tab content */

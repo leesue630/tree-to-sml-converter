@@ -2,6 +2,17 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
     <title>Tree-to-SML Text Converter</title>
   </head>
   <body align="center" onload="setFunFact()">
@@ -11,10 +22,9 @@
       direction="down"
       scrollamount="4"
       scrolldelay="30"
-      height="30px"
-      style="top:30px; left:0%;"
+      style="top:30px;"
       ><img src=http://dl8.glitter-graphics.net/pub/129/129498dwdy8d462k.gif
-      border=0></marquee
+      ></marquee
     >
 
     <marquee id="fact" behavior="alternate" bgcolor="green"></marquee>
@@ -37,7 +47,7 @@
 
     <!-- Tab content -->
     <div id="tree" class="tab-content">
-      <h1>Tree-to-SML Text Converter</h1>
+      <h1>Tree-to-SML</h1>
       This tree-to-text converter will fit the datatype:
       <br />
       <p class="left-inner type-p">
@@ -49,7 +59,7 @@
     </div>
 
     <div id="shrub" class="tab-content">
-      <h1>Shrub-to-SML Text Converter</h1>
+      <h1>Shrub-to-SML</h1>
       This shrub-to-text converter will fit the datatype:
       <br />
       <p class="left-inner type-p">
@@ -62,7 +72,7 @@
     </div>
 
     <div id="sml" class="tab-content">
-      <h1>SML-to-Tree Text Converter</h1>
+      <h1>SML-to-Tree</h1>
       This text-to-tree converter will fit the datatype:
       <br />
       <p class="left-inner type-p">
@@ -75,7 +85,13 @@
 
     <div align="center" id="to_sml_content">
       1. Depth:
-      <input type="text" name="depth_form" id="depth_form" class="form" placeholder="e.g. 3"/>
+      <input
+        type="text"
+        name="depth_form"
+        id="depth_form"
+        class="form"
+        placeholder="e.g. 3"
+      />
 
       <p id="depth_error_text" class="error-text"></p>
 
@@ -122,7 +138,6 @@
         type="text"
         name="sml_form"
         id="sml_form"
-        style="width: 100%"
         class="sml-box form"
         placeholder="e.g. Node(Empty, 2, Empty)"
       /><br />
@@ -147,5 +162,20 @@
     </div>
     <script type="text/javascript" src="to-sml-script.js"></script>
     <script type="text/javascript" src="from-sml-script.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

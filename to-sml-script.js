@@ -274,8 +274,7 @@ function randNum(max) {
 
 function setFunFact() {
   var randFact = funFacts[randNum(funFacts.length)];
-  document.getElementById("fact").innerHTML =
-    "Fun Tree Fact! " + randFact;
+  document.getElementById("fact").innerHTML = "Fun Tree Fact! " + randFact;
 }
 
 function openTab(evt, tabName) {
