@@ -2,6 +2,7 @@
 Test cases involving trees are difficult to type out in SML due to the many syntactic requirements (Node's, Empty's, parentheses, and commas).
 
 This page is meant to help both develop and visualize tree test cases to encourage testing of SML tree functions.
+<img src="treesite.png" width="700">
 
 ## Features
 - Tree-to-SML conversion
