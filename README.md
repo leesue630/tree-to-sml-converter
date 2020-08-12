@@ -2,8 +2,6 @@
 Test cases involving trees are difficult to type out in SML due to the many syntactic requirements (Node's, Empty's, parentheses, and commas).
 
 This page is meant to help both develop and visualize tree test cases to encourage testing of SML tree functions.
-<br />
-><img src="treesite.png" width="600">
 
 ## Features
 - Tree-to-SML conversion
@@ -19,6 +17,8 @@ The trees/shrubs are represented as a table.
 
 The SML-to-Tree conversion does not handle SML texts with parentheses and commas within quotations.
 For Tree/Shrub-to-SML conversion, valid nodes (aka non-empty nodes that have a valid path to the root) are given a green border when the SML text is generated.
+<br />
+><img src="treesite.png" width="600">
 
 Built with HTML, CSS, JavaScript.
 
