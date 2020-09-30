@@ -9,7 +9,8 @@ var funFacts = [
   "Have you ever knocked on wood for good luck? That superstition may have originated with primitive peoples who believed benevolent spirits lived in the trees. -hgtv.com",
   "Trees have an important role in preventing soil erosion - their net-like roots enable them to lock soil in place, and their leafy canopies reduce the force of wind and rain to minimize soil displacement. -hgtv.com",
   "If you chop down a tree, it will become Empty :( -Kaz",
-  "Parrots can live in trees! -PBrandon"
+  "Parrots can live in trees! -PBrandon",
+  "The similarity between all children nodes is a-parent! -Puhua C."
 ];
 
 // called when "Enter depth" clicked
