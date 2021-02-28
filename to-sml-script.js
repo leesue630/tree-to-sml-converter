@@ -10,7 +10,8 @@ var funFacts = [
   "Trees have an important role in preventing soil erosion - their net-like roots enable them to lock soil in place, and their leafy canopies reduce the force of wind and rain to minimize soil displacement. -hgtv.com",
   "If you chop down a tree, it will become Empty :( -Kaz",
   "Parrots can live in trees! -PBrandon",
-  "The similarity between all children nodes is a-parent! -Puhua C."
+  "The similarity between all children nodes is a-parent! -Puhua C.",
+  "Contrary to the beliefs of many computer scientists, trees tend to get wider as you go up, not down. (Let's invert our drawings to match reality) -Daniel N."
 ];
 
 // called when "Enter depth" clicked
