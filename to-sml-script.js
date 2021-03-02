@@ -3,7 +3,6 @@ var treeArray;
 var table;
 var activeTab;
 
-
 // called when "Enter depth" clicked
 // clears and generates table if depth is valid
 function depthEntered() {
@@ -15,11 +14,12 @@ function depthEntered() {
     } else {
       clearTable();
       document.getElementById("depth_error_text").innerHTML = "";
+      document.getElementById("negative_warning_text").innerHTML = "";
       generateInputTable();
     }
   } else {
     document.getElementById("depth_error_text").innerHTML =
-      "Depth must be a non-negative integer.";
+    "Depth must be a non-negative integer.";
   }
 }
 
@@ -48,25 +48,26 @@ function resetPage() {
   resetTable();
   if (activeTab.localeCompare("sml") != 0) {
     document.getElementById("table_warning_text").innerHTML = "";
+    document.getElementById("negative_warning_text").innerHTML = "";
     document.getElementById("sml_output_text").innerHTML =
       "~SML Text will appear here~";
   }
 }
 
 function createUIBFunction(i, j) {
-  return function() {
+  return function () {
     uncolorInputBorder(i, j);
   };
 }
 
 function createDLIFunction(i, j) {
-  return function() {
+  return function () {
     disableLeafInput(i, j);
   };
 }
 
 function createELIFunction(i, j) {
-  return function() {
+  return function () {
     enableLeafInput(i, j);
   };
 }
@@ -200,6 +201,10 @@ function treeTextHelper(i, j) {
     case "tree":
       if (cellij.value == "") return "Empty";
       colorCell(cellij, "valid");
+      if (cellij.value.includes("-")) {
+        document.getElementById("negative_warning_text").innerHTML =
+          "Warning: Negative sign used instead of ~";
+      }
       return (
         "Node(" +
         treeTextHelper(i + 1, j * 2) +
@@ -221,6 +226,10 @@ function treeTextHelper(i, j) {
         if (leafValueij.value == "")
           document.getElementById("table_warning_text").innerHTML =
             "Warning: Empty leaf value";
+        if (cellij.value.includes("-")) {
+          document.getElementById("negative_warning_text").innerHTML =
+            "Warning: Negative sign used instead of ~";
+        }
         return "Leaf(" + leafValueij.value + ")";
       }
       // node cell
@@ -245,6 +254,7 @@ function treeTextHelper(i, j) {
 
 function generateText() {
   document.getElementById("table_warning_text").innerHTML = "";
+  document.getElementById("negative_warning_text").innerHTML = "";
   for (var i = 0; i < depth; i++) {
     for (var j = 0; j < Math.pow(2, i); j++) {
       uncolorInputBorder(i, j);
@@ -295,13 +305,13 @@ function openTab(evt, tabName) {
 }
 
 const depthForm = document.getElementById("depth_form");
-depthForm.addEventListener("keyup", function(event) {
+depthForm.addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
     document.getElementById("enter_depth_btn").onclick();
   }
 });
 const smlForm = document.getElementById("sml_form");
-smlForm.addEventListener("keyup", function(event) {
+smlForm.addEventListener("keyup", function (event) {
   if (event.key === "Enter") {
     document.getElementById("generate_tree_btn").onclick();
   }
