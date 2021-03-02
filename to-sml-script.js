@@ -196,7 +196,6 @@ function treeTextHelper(i, j) {
     // shouldn't be possible for shrubs
     return "Empty";
   }
-  console.log("cell" + i + j);
   var cellij = document.getElementById("cell" + i + j);
   switch (activeTab) {
     case "tree":
