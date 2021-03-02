@@ -19,7 +19,7 @@ function depthEntered() {
     }
   } else {
     document.getElementById("depth_error_text").innerHTML =
-    "Depth must be a non-negative integer.";
+      "Depth must be a non-negative integer.";
   }
 }
 
@@ -196,6 +196,7 @@ function treeTextHelper(i, j) {
     // shouldn't be possible for shrubs
     return "Empty";
   }
+  console.log("cell" + i + j);
   var cellij = document.getElementById("cell" + i + j);
   switch (activeTab) {
     case "tree":
@@ -226,7 +227,7 @@ function treeTextHelper(i, j) {
         if (leafValueij.value == "")
           document.getElementById("table_warning_text").innerHTML =
             "Warning: Empty leaf value";
-        if (cellij.value.includes("-")) {
+        if (leafValueij.value.includes("-")) {
           document.getElementById("negative_warning_text").innerHTML =
             "Warning: Negative sign used instead of ~";
         }
